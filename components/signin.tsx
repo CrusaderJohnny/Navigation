@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from "react-native";
 import credentials from "../credentials.json"
 
 type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void};
@@ -18,18 +18,18 @@ const Sign_In: React.FC<Sign_InProps> = ({setIsSignedIn}) => {
   };
   return (
     <View style={styles.container}>
-      <Text>Log In</Text>
-      <TextInput style={styles.container}
+      <Text style={styles.text}>Log In</Text>
+      <TextInput style={styles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       ></TextInput>
-      <TextInput style={styles.container}
+      <TextInput style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
       ></TextInput>
-      <Button title="Login" onPress={handleLogin}></Button>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}><Text style={styles.text}>Log in</Text></TouchableOpacity>
     </View>
   );
 };
@@ -42,11 +42,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  text: {
+    fontSize: 24,
+  },
   input: {
-    height: 40,
+    height: 60,
+    width: 250,
     borderColor: "gray",
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
   },
+  button: {
+    backgroundColor: 'lightblue',
+    height: 50,
+    width: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
