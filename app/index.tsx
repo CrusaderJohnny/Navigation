@@ -9,6 +9,7 @@ export default function App() {
     return(
         <View style={styles.container}>
             <Button title="Go to lab 3" onPress={() => router.push('/lab_3')}/>
+            <Button title="Go to sign" onPress={() => router.push('/lab_3')}/>
             {/* {isSignedIn ? <Welcome/> : <Sign_In setIsSignedIn={setIsSignedIn}/>} */}
             {/* <Sign_In></Sign_In> */}
         </View>
