@@ -1,35 +1,54 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from "react-native";
-import credentials from "../credentials.json"
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import credentials from "../credentials.json";
+import SignUpForm from "../app/signup";
+import { routeToScreen } from "expo-router/build/useScreens";
+import { router } from "expo-router";
 
-type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void};
+type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void };
 
-
-const Sign_In: React.FC<Sign_InProps> = ({setIsSignedIn}) => {
+const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = () => {
-    const user = credentials.users.find((user) => user.username === username && user.password === password);
-    if(user) {
+    const user = credentials.users.find(
+      (user) => user.username === username && user.password === password
+    );
+    if (user) {
       setIsSignedIn(true);
-    }else{
+    } else {
       alert("Login Failed");
     }
   };
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Log In</Text>
-      <TextInput style={styles.input}
+      <TextInput
+        style={styles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       ></TextInput>
-      <TextInput style={styles.input}
+      <TextInput
+        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
       ></TextInput>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}><Text style={styles.text}>Log in</Text></TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.text}>Log in</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.push("/signup")}>
+        <Text style={styles.text}>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -54,10 +73,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: "lightblue",
     height: 50,
     width: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    margin: 10,
+  },
 });
