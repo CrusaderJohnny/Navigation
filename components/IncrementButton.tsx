@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
     width: 100,
     height: 40,
     borderRadius: 10,
-    borderColor: 'black',
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "black",
+    backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "center",
     margin: 10,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-  }
+  },
 });
