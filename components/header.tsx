@@ -13,8 +13,9 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-   
     alignItems: "center",
+    borderBottomColor: "lightgrey",
+    borderBottomWidth: 1,
   },
   text: {
     fontSize: 24,

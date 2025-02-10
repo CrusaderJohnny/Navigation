@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 40,
     width: 160,
+    marginBottom: 15,
   },
   text: {
     fontSize: 24,
