@@ -11,7 +11,14 @@ const Welcome = () => {
       >
         <Text>Go to Lab 3</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/(tabs)/calgary")}
+      >
+        <Text>Go to Assignment 2</Text>
+      </TouchableOpacity>
     </View>
+    
   );
 };
 
@@ -29,10 +36,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 40,
     width: 160,
+    marginBottom: 15,
   },
   text: {
     fontSize: 24,
     padding: 10,
     margin: 10,
   },
+
 });
