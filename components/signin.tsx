@@ -33,7 +33,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={["left", "right"]}>
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-          <Text style={styles.text}>Log In</Text>
+          <Text style={styles.textAbove}>Log In</Text>
           <TextInput
             style={styles.input}
             placeholder="Username"
@@ -69,12 +69,16 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 500,
+    width: 600,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
     fontSize: 24,
+  },
+  textAbove: {
+    color: 'white',
+    fontSize: 36,
   },
   input: {
     height: 60,
