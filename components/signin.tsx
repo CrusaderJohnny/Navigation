@@ -10,8 +10,6 @@ import {
   ImageBackground,
 } from "react-native";
 import credentials from "../credentials.json";
-import SignUpForm from "../app/signup";
-// import { routeToScreen } from "expo-router/build/useScreens";
 import { router } from "expo-router";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
