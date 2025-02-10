@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,13 +7,16 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  ImageBackground,
 } from "react-native";
 import credentials from "../credentials.json";
 import SignUpForm from "../app/signup";
-import { routeToScreen } from "expo-router/build/useScreens";
+// import { routeToScreen } from "expo-router/build/useScreens";
 import { router } from "expo-router";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void };
+const image = require("../assets/loginBackground.jpg");
 
 const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
   const [username, setUsername] = useState("");
@@ -29,27 +32,34 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
     }
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Log In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      ></TextInput>
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-      ></TextInput>
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.text}>Log in</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={() => router.push("/signup")}>
-        <Text style={styles.text}>Register</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container} edges={["left", "right"]}>
+        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+          <Text style={styles.text}>Log In</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+          ></TextInput>
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+          ></TextInput>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.text}>Log in</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/signup")}
+          >
+            <Text style={styles.text}>Register</Text>
+          </TouchableOpacity>
+        </ImageBackground>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -58,8 +68,12 @@ export default Sign_In;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  image: {
+    flex: 1,
+    width: 500,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     fontSize: 24,
@@ -71,6 +85,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
+    backgroundColor: "white",
   },
   button: {
     backgroundColor: "lightblue",
