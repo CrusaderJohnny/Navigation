@@ -28,24 +28,26 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = () => {
-    const user = credentials.users.find(
+        const user = credentials.users.find(
       (user) => user.username === username && user.password === password
     );
-        if (!validateUsername(username)) {
+    if (user) {
+      setIsSignedIn(true);
+    } else if (!validateUsername(username)) {
           Alert.alert(
             "Invalid Username",
             "Username must be at least 5 characters long"
           );
           return;
         }
-        if (!validatePassword(password)) {
+        else if (!validatePassword(password)) {
           Alert.alert(
             "Invalid Password",
             "Password must be at least 8 characters long, include upper and lowercase, a number, and a special character"
           );
           return;
         }
-      };
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={["left", "right"]}>
@@ -64,7 +66,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
             onChangeText={setPassword}
           ></TextInput>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.text}>Log In</Text>
+            <Text style={styles.text}>Log in</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
