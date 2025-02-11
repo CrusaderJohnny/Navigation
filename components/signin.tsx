@@ -64,7 +64,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
             onChangeText={setPassword}
           ></TextInput>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.text}>Log in</Text>
+            <Text style={styles.text}>Log In</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
