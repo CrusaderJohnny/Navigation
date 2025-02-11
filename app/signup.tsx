@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
+import credentials from "../credentials.json";
 
 const validateUsername = (username: string): boolean => {
   return username.length >= 5;

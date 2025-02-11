@@ -15,6 +15,14 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void };
 const image = require("../assets/loginBackground.jpg");
+const validateUsername = (username: string): boolean => {
+  return username.length >= 5;
+};
+const validatePassword = (password: string): boolean => {
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
 
 const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
   const [username, setUsername] = useState("");
@@ -23,12 +31,21 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
     const user = credentials.users.find(
       (user) => user.username === username && user.password === password
     );
-    if (user) {
-      setIsSignedIn(true);
-    } else {
-      alert("Login Failed");
-    }
-  };
+        if (!validateUsername(username)) {
+          Alert.alert(
+            "Invalid Username",
+            "Username must be at least 5 characters long"
+          );
+          return;
+        }
+        if (!validatePassword(password)) {
+          Alert.alert(
+            "Invalid Password",
+            "Password must be at least 8 characters long, include upper and lowercase, a number, and a special character"
+          );
+          return;
+        }
+      };
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container} edges={["left", "right"]}>
