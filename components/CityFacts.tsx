@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 interface CityFactsProps {
-  facts: string;  
+  facts: string;
 }
 
 const CityFacts = ({ facts }: CityFactsProps) => {
@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0F8FF",
     borderRadius: 50,
     alignItems: "center",
-    marginLeft: 10,  
+    marginLeft: 10,
     marginRight: 10,
-    borderWidth: .2,
+    borderWidth: 0.2,
   },
   factsText: {
     fontSize: 16,

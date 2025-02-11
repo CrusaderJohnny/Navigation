@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: 600,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 24,
   },
   textAbove: {
-    color: 'white',
+    color: "white",
     fontSize: 36,
   },
   input: {

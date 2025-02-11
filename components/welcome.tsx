@@ -18,7 +18,6 @@ const Welcome = () => {
         <Text>Go to Assignment 2</Text>
       </TouchableOpacity>
     </View>
-    
   );
 };
 
@@ -43,5 +42,4 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
-
 });
