@@ -5,7 +5,7 @@ import Welcome from "../components/welcome";
 import { Link, router } from "expo-router";
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(true);
   return (
     <View style={styles.container}>
       {isSignedIn ? <Welcome /> : <Sign_In setIsSignedIn={setIsSignedIn} />}

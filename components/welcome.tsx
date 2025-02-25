@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 
 const Welcome = () => {
   return (
@@ -17,6 +17,11 @@ const Welcome = () => {
       >
         <Text>Go to Assignment 2</Text>
       </TouchableOpacity>
+      <Pressable 
+      style={styles.button}
+      onPress={() => router.push("/lab_4")}>
+        <Text>Go to lab 4</Text>
+      </Pressable>
     </View>
   );
 };
