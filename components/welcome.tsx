@@ -22,6 +22,11 @@ const Welcome = () => {
       onPress={() => router.push("/lab_4")}>
         <Text>Go to lab 4</Text>
       </Pressable>
+      <Pressable 
+      style={styles.button}
+      onPress={() => router.push("/lab_5")}>
+        <Text>Go to lab 5</Text>
+      </Pressable>
     </View>
   );
 };
