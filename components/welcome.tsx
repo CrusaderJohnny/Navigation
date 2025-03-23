@@ -1,10 +1,11 @@
 import { router } from "expo-router";
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 
-const Welcome = () => {
+const Welcome = (userName: string) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome To the page</Text>
+      <Text style={styles.text}>{userName || "User"}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => router.push("/lab_3")}

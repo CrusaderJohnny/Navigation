@@ -6,9 +6,14 @@ import { Link, router } from "expo-router";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  const handleSignIn = (name: string) => {
+    setUserName(name);
+  };
   return (
     <View style={styles.container}>
-      {isSignedIn ? <Welcome /> : <Sign_In setIsSignedIn={setIsSignedIn} />}
+      {isSignedIn ? <Welcome userName={userName} /> : <Sign_In setIsSignedIn={setIsSignedIn} onSignInSuccess={handleSignIn} />}
       
     </View>
   );

@@ -11,7 +11,10 @@ import { router } from "expo-router";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import supabase from "../lib/supabase";
 
-type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void };
+type Sign_InProps = { 
+  setIsSignedIn: (isSignedIn: boolean) => void;
+  onSignInSuccess: (userName: string) => void;
+};
 
 const image = require("../assets/loginBackground.jpg");
 
@@ -26,7 +29,7 @@ const validatePassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };
 
-const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
+const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,8 +55,18 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
         Alert.alert("Login error", error.message);
         return;
       }
+      const {data: userData, error: userError} = await supabase
+      .from("user_details")
+      .select("first_name")
+      .eq("uuid", data.user.id)
+      .single();
+      if(userError || !userData) {
+        Alert.alert("Error", "Could not fetch user data");
+        return;
+      }
 
       setIsSignedIn(true);
+      onSignInSuccess(userData.first_name);
       router.push("/");
     } catch (err) {
       Alert.alert("Error", "An unexpected error occured");
