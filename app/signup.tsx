@@ -50,7 +50,7 @@ const SignUpForm = () => {
         return;
       }
       if(data && data.user && data.user.id) {
-        const {error: insertError} = await supabase.from('user_detials').insert({
+        const {error: insertError} = await supabase.from(TABLE_NAME).insert({
           uuid: data.user.id,
           first_name: fName,
           last_name: lName,
