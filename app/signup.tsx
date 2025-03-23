@@ -56,12 +56,6 @@ const SignUpForm = () => {
           last_name: lName,
           email: email,
         });
-        console.log("Inserting user data:", {
-          uuid: data.user.id,
-          first_name: fName,
-          last_name: lName,
-          email: email,
-        });
         if(insertError) {
           console.error("Database error", insertError);
           Alert.alert("Database error", insertError.message);
