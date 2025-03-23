@@ -1,17 +1,18 @@
 import { useState } from "react";
 import {
   Alert,
-  Button,
   TextInput,
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
 } from "react-native";
-import credentials from "../credentials.json";
+import supabase from "../lib/supabase";
+const TABLE_NAME = "user_details";
 
-const validateUsername = (username: string): boolean => {
-  return username.length >= 5;
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
 const validatePassword = (password: string): boolean => {
   const passwordRegex =
@@ -20,13 +21,15 @@ const validatePassword = (password: string): boolean => {
 };
 
 const SignUpForm = () => {
-  const [username, setUsername] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const signUpHandler = () => {
-    if (!validateUsername(username)) {
+  const signUpHandler = async () => {
+    if (!validateEmail(email)) {
       Alert.alert(
-        "Invalid Username",
-        "Username must be at least 5 characters long"
+        "Invalid Email",
+        "Must enter a valid email address"
       );
       return;
     }
@@ -37,17 +40,68 @@ const SignUpForm = () => {
       );
       return;
     }
-    Alert.alert("Success!", "Signup Succesful!");
-    console.log("Username:", username);
-    console.log("Password:", password);
+    try {
+      const {data, error} = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if(error) {
+        Alert.alert("Sign up error: ", error.message);
+        return;
+      }
+      if(data && data.user && data.user.id) {
+        const {error: insertError} = await supabase.from('user_detials').insert({
+          uuid: data.user.id,
+          first_name: fName,
+          last_name: lName,
+          email: email,
+        });
+        console.log("Inserting user data:", {
+          uuid: data.user.id,
+          first_name: fName,
+          last_name: lName,
+          email: email,
+        });
+        if(insertError) {
+          console.error("Database error", insertError);
+          Alert.alert("Database error", insertError.message);
+          return;
+        }
+      } else {
+        console.error("data.user is missing");
+        Alert.alert("signup error", 
+          "There was an issue with the sign up process."
+        );
+        return;
+      }
+      Alert.alert("Success!", "Signup Succesful!");
+    } catch(err) {
+      Alert.alert("Error", "An unexpected error occurred.");
+      console.error("Sign up failed:", err);
+    }
+
   };
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="First Name"
+        value={fName}
+        onChangeText={setFName}
+        autoCapitalize="none" // Prevent auto-capitalization of the first letter
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name"
+        value={lName}
+        onChangeText={setLName}
+        autoCapitalize="none" // Prevent auto-capitalization of the first letter
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
         autoCapitalize="none" // Prevent auto-capitalization of the first letter
       />
       <TextInput
@@ -56,6 +110,7 @@ const SignUpForm = () => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry // Hide the password characters
+        autoCapitalize="none"
       />
       <TouchableOpacity style={styles.button} onPress={signUpHandler}>
         <Text style={styles.text}>Sign Up</Text>

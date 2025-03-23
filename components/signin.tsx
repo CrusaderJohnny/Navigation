@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  View,
   Text,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Alert,
   ImageBackground,
 } from "react-native";
-import credentials from "../credentials.json";
 import { router } from "expo-router";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import supabase from "../lib/supabase";
 
 type Sign_InProps = { setIsSignedIn: (isSignedIn: boolean) => void };
+
 const image = require("../assets/loginBackground.jpg");
-const validateUsername = (username: string): boolean => {
-  return username.length >= 5;
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 };
+
 const validatePassword = (password: string): boolean => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -25,28 +27,38 @@ const validatePassword = (password: string): boolean => {
 };
 
 const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
-  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleLogin = () => {
-        const user = credentials.users.find(
-      (user) => user.username === username && user.password === password
-    );
-    if (user) {
+
+  const handleLogin = async () => {
+    if(!validateEmail(email)) {
+      Alert.alert("Invalid Email", "Please enter a valid email address");
+      return;
+    }
+
+    if(!validatePassword(password)) {
+      Alert.alert("Invalid Password", "Password must be at least 8 characters long, include upper and lowercase, a number, and a special character");
+      return;
+    }
+
+    try{
+      const{data,error} = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if(error) {
+        Alert.alert("Login error", error.message);
+        return;
+      }
+
       setIsSignedIn(true);
-    } else if (!validateUsername(username)) {
-          Alert.alert(
-            "Invalid Username",
-            "Username must be at least 5 characters long"
-          );
-          return;
-        }
-        else if (!validatePassword(password)) {
-          Alert.alert(
-            "Invalid Password",
-            "Password must be at least 8 characters long, include upper and lowercase, a number, and a special character"
-          );
-          return;
-        }
+      router.push("/");
+    } catch (err) {
+      Alert.alert("Error", "An unexpected error occured");
+      console.error("Login failed", err);
+    }
   };
   return (
     <SafeAreaProvider>
@@ -55,9 +67,9 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn }) => {
           <Text style={styles.textAbove}>Log In</Text>
           <TextInput
             style={styles.input}
-            placeholder="Username"
-            value={username}
-            onChangeText={setUsername}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
           ></TextInput>
           <TextInput
             style={styles.input}
