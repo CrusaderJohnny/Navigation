@@ -69,7 +69,6 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => 
 
       setIsSignedIn(true);
       onSignInSuccess(userData.first_name);
-      router.push("/");
     } catch (err) {
       Alert.alert("Error", "An unexpected error occured");
       console.error("Login failed", err);
