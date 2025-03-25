@@ -62,6 +62,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => 
       .single();
       if(userError || !userData) {
         Alert.alert("Error", "Could not fetch user data");
+        console.log('Error fetching user data,', userError, userData)
         return;
       }
 
