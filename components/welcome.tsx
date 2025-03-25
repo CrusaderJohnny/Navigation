@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 
-const Welcome = (userName: string) => {
+const Welcome = (userName : any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Welcome To the page</Text>
