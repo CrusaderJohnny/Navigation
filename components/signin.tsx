@@ -66,7 +66,6 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => 
         console.log('Error fetching user data,', userError, userData);
         return;
       }
-
       setIsSignedIn(true);
       onSignInSuccess(userData.first_name);
     } catch (err) {
