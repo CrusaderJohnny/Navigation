@@ -50,10 +50,11 @@ const SignUpForm = () => {
         return;
       }
       if(data && data.user && data.user.id) {
+        const userId = data.user.id;
         console.log("UUID from auth:", data.user.id);
         console.log("Inserting UUID:", data.user.id.toString());
         const {error: insertError} = await supabase.from(TABLE_NAME).insert({
-          uuid: data.user.id.toString(),
+          uuid: userId,
           first_name: fName,
           last_name: lName,
           email: email,
