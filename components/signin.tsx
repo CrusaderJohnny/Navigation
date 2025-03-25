@@ -55,6 +55,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => 
         Alert.alert("Login error", error.message);
         return;
       }
+      console.log("Querying with", data.user.id);
       const {data: userData, error: userError} = await supabase
       .from("user_details")
       .select("first_name")
@@ -62,7 +63,7 @@ const Sign_In: React.FC<Sign_InProps> = ({ setIsSignedIn, onSignInSuccess }) => 
       .single();
       if(userError || !userData) {
         Alert.alert("Error", "Could not fetch user data");
-        console.log('Error fetching user data,', userError, userData)
+        console.log('Error fetching user data,', userError, userData);
         return;
       }
 
